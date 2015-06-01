@@ -5,6 +5,7 @@ from collections import deque
 import pickle
 import os
 import json
+import sys
 
 class TweepyBot:
     bot = None  # holds tweepy instance
@@ -144,6 +145,7 @@ class StdOutListener(tweepy.StreamListener):
     Callback when mention is received
     '''
     def on_data(self, data):
+        print('Mention received, processing..')
         try:
             decoded = json.loads(data)
             self.tbot.processMention(decoded)

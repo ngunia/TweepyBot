@@ -11,6 +11,7 @@ try:
     bot = TweepyBot(forecastio_tweets.TweetMaker())
 
     # add mentions since last run to queue
+    print('Bot processing any mentions since last run..')
     bot.getMentions()
 
     # start listening for incoming mentions on stream endpoint
@@ -30,9 +31,12 @@ try:
                     print('Error: Can\'t send duplicate tweet. Not sending above, continuing.')
                     print()
                     continue
+                else:
+                    raise
 
 except KeyboardInterrupt:
     print('Keyboard interrupt detected, shutting down bot..')
     bot.shutdown()
     print('Goodbye!')
+finally:
     sys.exit()

@@ -36,10 +36,9 @@ class TweetMaker:
         if loc is None:
             return 'Hello, @'+user+'! Your ZIP code was invalid, please try again.'
         current_time = self.getLocalTime(loc)
-        print(self.formatTime(current_time))
 
         if cmd == 'now':
-            tweet = self.getCurrentSummary(user, loc, current_time)
+            tweet = self.getFutureSummary(user, loc, current_time, days=0)
         elif cmd == 'tomorrow':
             tweet = self.getFutureSummary(user, loc, current_time, days=1)
         elif cmd == 'days':
@@ -49,7 +48,6 @@ class TweetMaker:
                 return 'Hello, @'+user+'! Number of days was invalid, please try again.'
             tweet = self.getFutureSummary(user, loc, current_time, days=int(when))
         elif cmd == 'rain':
-            # TODO test an invalid when
             try:
                 day, hour = when.split('+')
                 day, hour = int(day), int(hour)
@@ -80,21 +78,12 @@ class TweetMaker:
                                         time=time)
 
     '''
-    Get the current forecast summary
-    '''
-    def getCurrentSummary(self, user, loc, time):
-        # TODO add format time for the day
-        forecast = self.getForecast(loc, time)
-        tweet = '@'+user+' '+str(forecast.currently().summary)
-        return tweet[0:140]
-
-    '''
     Get a forecast summary for an upcoming day
     '''
     def getFutureSummary(self, user, loc, time, days):
-        # TODO add format time for the day
         forecast = self.getForecast(loc, time+timedelta(days=days))
-        tweet = '@'+user+' '+str(forecast.currently().summary)
+        out_time = self.formatTime(time, days)
+        tweet = '@'+user+' Forecast for '+ out_time + ': ' +str(forecast.currently().summary)
         return tweet[0:140]
 
     '''
@@ -117,11 +106,19 @@ class TweetMaker:
         return tweet[0:140]
 
     '''
-    Formats a datetime object for response
+    Formats a datetime object by hour for response
     '''
     def formatTime(self, current_time, days=0, hour=0):
         time = current_time+timedelta(days=days,hours=hour)
         fmt = '%a, %m/%d at %I:%M %p'
+        return time.strftime(fmt)
+
+    '''
+    Formats a datetime object by day for response
+    '''
+    def formatTime(self, current_time, days=0):
+        time = current_time+timedelta(days=days)
+        fmt = '%a, %m/%d'
         return time.strftime(fmt)
 
     '''
