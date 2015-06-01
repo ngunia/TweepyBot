@@ -6,7 +6,7 @@ Bot Twitter handle: @forecastcheck
 Basic request format: @forecastcheck \<zip\> \<cmd\> \<when\>
 
 
-##Day summary:
+###Day summary:
 - @forecastcheck \<zip\> \<cmd\> \<when\>
 - @forecastcheck \<zip\> now
 - @forecastcheck \<zip\> tomorrow
@@ -14,17 +14,17 @@ Basic request format: @forecastcheck \<zip\> \<cmd\> \<when\>
 
 
 
-##Precipitation chance:
+###Precipitation chance:
 - @forecastcheck \<zip\> rain \<int days in future 0-8\>+\<int hour of day on 0-23\>
 
-##Temperature at given hour:
+###Temperature at given hour:
 - @forecastcheck \<zip\> temp \<int days in future 0-8\>+\<int hour of day on 0-23\>
 
 
 
 #To run code:
 
-##Dependencies:
+###Dependencies:
 ```
 pip install tweepy
 pip install python-forecastio
