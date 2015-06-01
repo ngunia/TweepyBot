@@ -15,10 +15,10 @@ Basic request format: @forecastcheck \<zip\> \<cmd\> \<when\>
 
 
 ##Precipitation chance:
--@forecastcheck \<zip\> rain \<int days in future 0-8\>+\<int hour of day on 0-23\>
+- @forecastcheck \<zip\> rain \<int days in future 0-8\>+\<int hour of day on 0-23\>
 
 ##Temperature at given hour:
--@forecastcheck \<zip\> temp \<int days in future 0-8\>+\<int hour of day on 0-23\>
+- @forecastcheck \<zip\> temp \<int days in future 0-8\>+\<int hour of day on 0-23\>
 
 
 
