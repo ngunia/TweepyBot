@@ -1,6 +1,7 @@
 from tweepybot import TweepyBot
 import forecastio_tweets
 import logging, keys, sys
+from tweepy import TweepError
 
 if keys.LOGGING:
     logging.basicConfig(format='%(levelname)s: %(message)s', level=logging.DEBUG)
@@ -21,9 +22,17 @@ try:
         # if there are ready to send tweets in the queue and rate limit isn't being exceeded, tweet one out
         if bot.tweetQueueNotEmpty() and bot.notSpamming():
             print('Bot sending a tweet..')
-            bot.sendTweet()
+            try:
+                bot.sendTweet()
+                print()
+            except TweepError as e:
+                if str(e) == 'Twitter error response: status code = 403':
+                    print('Error: Can\'t send duplicate tweet. Not sending above, continuing.')
+                    print()
+                    continue
 
 except KeyboardInterrupt:
-    print('Keyboard interrupt detected, shutting down bot.')
+    print('Keyboard interrupt detected, shutting down bot..')
     bot.shutdown()
+    print('Goodbye!')
     sys.exit()

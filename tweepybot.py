@@ -38,6 +38,7 @@ class TweepyBot:
             if self.lastMentionID < mentions[0].id:
                 self.setLastMentionID(mentions[0].id)
             for mention in mentions:
+                pass
                 self.processMention(mention._json)
 
     '''
@@ -121,7 +122,9 @@ class TweepyBot:
     '''
     def shutdown(self):
         self._persistData()
+        print('data saved to '+keys.PERSISTENCE_FILE)
         self.stream.disconnect()
+        print('stream disconnected')
 
 """
 A listener handles tweets are the received from the stream end point.
@@ -131,9 +134,15 @@ class StdOutListener(tweepy.StreamListener):
 
     tbot = None
 
+    '''
+    add bot object to listener so that it can access processing methods for mention
+    '''
     def addBotInstance(self, tbot):
         self.tbot = tbot
 
+    '''
+    Callback when mention is received
+    '''
     def on_data(self, data):
         try:
             decoded = json.loads(data)
@@ -142,5 +151,10 @@ class StdOutListener(tweepy.StreamListener):
         except:
             raise
 
+    '''
+    This function occurs when an error is thrown during streaming.
+    NOTE: Tweepy has a bug where the actual exception is not raised properly, making this effectively useless for now
+    See: https://github.com/tweepy/tweepy/issues/570
+    '''
     def on_error(self, status):
         print(status)
