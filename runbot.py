@@ -38,5 +38,4 @@ except KeyboardInterrupt:
     print('Keyboard interrupt detected, shutting down bot..')
     bot.shutdown()
     print('Goodbye!')
-finally:
     sys.exit()

@@ -37,6 +37,9 @@ class TweetMaker:
             return 'Hello, @'+user+'! Your ZIP code was invalid, please try again.'
         current_time = self.getLocalTime(loc)
 
+        if when is None:
+            when = '0+'+str(current_time.hour)
+
         if cmd == 'now':
             tweet = self.getFutureSummary(user, loc, current_time, days=0)
         elif cmd == 'tomorrow':
@@ -91,7 +94,7 @@ class TweetMaker:
     '''
     def getTempAtTime(self, user, loc, time, days, hour):
         forecast = self.getForecast(loc, time+timedelta(days=days))
-        out_time = str(self.formatTime(time, days, hour))
+        out_time = str(self.formatTimeHour(time, days, hour=hour))
         tweet = '@'+user+' Temp for ' + out_time + ' is ' +str(forecast.hourly().data[hour].temperature)+' F'
         return tweet[0:140]
 
@@ -101,14 +104,14 @@ class TweetMaker:
     def getPrecipAtTime(self, user, loc, time, days, hour):
         forecast = self.getForecast(loc, time+timedelta(days=days))
         precip_chance = int(float(forecast.hourly().data[hour].precipProbability) * 100)
-        out_time = str(self.formatTime(time, days, hour))
+        out_time = str(self.formatTimeHour(time, days=days, hour=hour))
         tweet = '@'+user+' Chance of Precipitation for ' + out_time + ' is ' + str(precip_chance)+'%'
         return tweet[0:140]
 
     '''
     Formats a datetime object by hour for response
     '''
-    def formatTime(self, current_time, days=0, hour=0):
+    def formatTimeHour(self, current_time, days=0, hour=0):
         time = current_time+timedelta(days=days,hours=hour)
         fmt = '%a, %m/%d at %I:%M %p'
         return time.strftime(fmt)
