@@ -33,3 +33,7 @@ pip install pytz
 ```
 
 At the terminal: python3 runbot.py
+
+###Known Issues:
+Using Ctrl+C shuts down bot, but does not return control to the terminal window.  This is due to the async stream
+listener in Tweepy not having a proper way to be shutdown.
