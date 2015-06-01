@@ -1,0 +1,16 @@
+# Twitter keys
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
+ACCESS_KEY = ''
+ACCESS_SECRET = ''
+
+# Forecast.IO key
+FORECAST_IO_KEY = ''
+
+# Geonames username for access to web api
+GEONAMES_USERNAME = ''
+
+# bot configurations
+PERSISTENCE_FILE = 'persist_data'
+BOT_NAME = ''
+LOGGING = False
